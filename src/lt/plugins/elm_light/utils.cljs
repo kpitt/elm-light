@@ -9,6 +9,7 @@
             [clojure.string :as s]))
 
 (def elm-plugin-dir (plugins/find-plugin "elm-light"))
+(def elm-package-file "elm.json")
 (def cp (js/require "child_process"))
 (def marked (js/require (files/join elm-plugin-dir "node_modules" "marked")))
 
@@ -103,7 +104,7 @@
 (defn project-path [path]
   (if (files/dir? path)
     path
-    (if-let [pkg-json (files/walk-up-find path "elm-package.json")]
+    (if-let [pkg-json (files/walk-up-find path elm-package-file)]
       (files/parent pkg-json)
       nil ;(files/parent path)
       )))
@@ -129,7 +130,7 @@
 
 
 (defn get-project-deps [project-path]
-  (let [pkg-json (files/join project-path "elm-package.json")
+  (let [pkg-json (files/join project-path elm-package-file)
         deps-json (files/join project-path "elm-stuff" "exact-dependencies.json")]
 
     (->> (parse-json-file pkg-json)
@@ -144,7 +145,7 @@
 
 (defn valid-project-elm-version [project-path]
   (let [elm (get-elm-version)
-        json (parse-json-file (files/join project-path "elm-package.json"))
+        json (parse-json-file (files/join project-path elm-package-file))
         v-bounds (:elm-version json)]
 
     (if (and elm json v-bounds)
@@ -154,7 +155,7 @@
       [false "Error checking elm version constraint"])))
 
 (defn project-satisfies-version? [version project-path]
-  (let [json (parse-json-file (files/join project-path "elm-package.json"))
+  (let [json (parse-json-file (files/join project-path elm-package-file))
         v-bounds (:elm-version json)]
 
     (if (and version json v-bounds)

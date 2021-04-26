@@ -118,7 +118,7 @@
   (let [url (str "http://package.elm-lang.org/packages/"
                  (:package dep) "/"
                  (:version dep) "/"
-                 "elm-package.json")]
+                 u/elm-package-file)]
     (fetch/xhr url
                {}
                (fn [data]
@@ -162,7 +162,7 @@
                   (map #(assoc % :summary (-> (find-package-by-name dependency-graph (:package %))
                                               :summary))))
         direct (filter :range pkgs)
-        rootVersion (-> (u/parse-json-file (files/join project-path "elm-package.json"))
+        rootVersion (-> (u/parse-json-file (files/join project-path u/elm-package-file))
                         :version)
         root {:package (files/basename project-path) :version rootVersion :shape "ellipse"}]
     {:packages pkgs

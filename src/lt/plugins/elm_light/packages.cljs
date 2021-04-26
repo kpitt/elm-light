@@ -21,7 +21,7 @@
 
 
 (defn remove-pkg [path pkg]
-  (let [pkg-file (files/join path "elm-package.json")]
+  (let [pkg-file (files/join path u/elm-package-file)]
     (-> (u/parse-json-file pkg-file)
         (update-in [:dependencies] (fn [deps]
                                      (-> (into {}

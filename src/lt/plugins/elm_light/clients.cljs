@@ -174,7 +174,9 @@
       (not (seq proj-path))
       (do
         (notifos/done-working)
-        (notifos/set-msg! (str "Couldn't find a elm-package.json in any parent of path: " path) {:class "error"})
+        (notifos/set-msg!
+          (str "Couldn't find \"" u/elm-package-file "\" file in any parent of path: " path)
+          {:class "error"})
         (cs/rem! client))
 
       (not (check-elm))

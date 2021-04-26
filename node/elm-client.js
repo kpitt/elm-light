@@ -42,6 +42,9 @@ if (!String.prototype.endsWith) {
 
 /* ----------- START CLIENT / BOOTSTRAP --------- */
 
+// Elm version-specific values (defined for 0.19)
+var elmPackageFile = "elm.json";
+
 
 // Not much useful can be done without packages, might as well try to insall by default
 // If already installed the overhead is neglible
@@ -316,7 +319,7 @@ function getProjectDeps(projectDir) {
   try {
     var depsPath = path.join(projectDir, "elm-stuff/exact-dependencies.json");
     var deps = JSON.parse(fs.readFileSync(depsPath).toString());
-    var packageJsonPath = path.join(projectDir, "elm-package.json");
+    var packageJsonPath = path.join(projectDir, elmPackageFile);
     var packageJson = JSON.parse(fs.readFileSync(packageJsonPath).toString());
     var exposedPackages = Object.keys(packageJson["dependencies"]);
 
@@ -401,7 +404,7 @@ function sendAstMsg(msg) {
 
 
 function getSourceDirs (projectDir) {
-  var jsonPath = path.join(projectDir, "elm-package.json");
+  var jsonPath = path.join(projectDir, elmPackageFile);
 
   var sourceDirs = [];
   try {
@@ -415,7 +418,7 @@ function getSourceDirs (projectDir) {
 }
 
 function getExposedModules (projectDir) {
-  var jsonPath = path.join(projectDir, "elm-package.json");
+  var jsonPath = path.join(projectDir, elmPackageFile);
 
   var modules = [];
   try {

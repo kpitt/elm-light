@@ -47,7 +47,7 @@
 
 
 (defn parse-project-cfg [project-path]
-  (util/parse-json-file (files/join project-path "elm-package.json")))
+  (util/parse-json-file (files/join project-path util/elm-package-file)))
 
 (defn save-test-cfg! [path test-cfg]
   (->> (util/pretty-json test-cfg)
@@ -87,7 +87,7 @@
   (when-let [project-cfg (parse-project-cfg project-path)]
     (notifos/working "Init elm test config")
     (let [test-path (maybe-create-test-path! project-path)
-          test-cfg-path (files/join test-path "elm-package.json")]
+          test-cfg-path (files/join test-path util/elm-package-file)]
       (maybe-add-templates test-path)
       (->> (->test-config project-cfg)
            (save-test-cfg! test-cfg-path))

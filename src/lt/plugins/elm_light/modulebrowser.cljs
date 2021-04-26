@@ -28,7 +28,7 @@
   (let [pck-json (u/parse-json-file (files/join project-path
                                                 "elm-stuff/packages"
                                                 package exact
-                                                "elm-package.json"))]
+                                                u/elm-package-file))]
     (->> pck-json
          :exposed-modules
          (map (fn [x]
@@ -54,7 +54,7 @@
 
 
 (defn- get-project-modules [project-path]
-  (let [pck-json (u/parse-json-file (files/join project-path "elm-package.json"))]
+  (let [pck-json (u/parse-json-file (files/join project-path u/elm-package-file))]
     (->> (:source-directories pck-json)
          (mapcat (fn [dir]
                    (if (= dir ".")
