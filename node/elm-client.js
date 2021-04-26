@@ -199,7 +199,7 @@ function startMessageListener() {
 
 
 function startWatcher() {
-  var watcher = chokidar.watch(['elm-package.json',
+  var watcher = chokidar.watch([elmPackageFile,
                                 'elm-stuff/exact-dependencies.json',
                                 '**/*.elm'], {
     cwd: process.cwd(),
