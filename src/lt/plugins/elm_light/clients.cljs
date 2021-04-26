@@ -162,7 +162,10 @@
 
 
 (defn check-elm []
-  (.which shelljs "elm-make"))
+  (let [elm-v (util/get-elm-version)]
+    (if-not (util/ver-LT? "0.19.0" elm-v)
+      true
+      (.which shelljs "elm-make"))))
 
 
 
