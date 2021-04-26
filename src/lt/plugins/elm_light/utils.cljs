@@ -10,6 +10,7 @@
 
 (def elm-plugin-dir (plugins/find-plugin "elm-light"))
 (def elm-package-file "elm.json")
+(def elm-light-file ".elm-light.json")
 (def cp (js/require "child_process"))
 (def marked (js/require (files/join elm-plugin-dir "node_modules" "marked")))
 

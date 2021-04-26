@@ -1,6 +1,12 @@
 (ns lt.plugins.elm-light
   (:require [lt.plugins.elm-light.selection :as elm-sel]
-            [lt.plugins.elm-light.utils :refer [find-symbol project-path reactor-path parse-json-file str-contains elm-package-file]]
+            [lt.plugins.elm-light.utils :refer [find-symbol
+                                                project-path
+                                                reactor-path
+                                                parse-json-file
+                                                str-contains
+                                                elm-package-file
+                                                elm-light-file]]
             [lt.plugins.elm-light.clients :refer [try-connect get-eval-client get-eval-client-if-connected elm]]
             [lt.plugins.elm-light.elm-ast :as elm-ast]
             [lt.plugins.elm-light.linter :as linter]
@@ -164,7 +170,7 @@
 
 (defn missing-make-info-popup []
   (popup/popup! {:header "You need to configure make info for your project"
-                 :body (str "You configure a key \"make-info\" in your elm-package.json
+                 :body (str "You configure a key \"make-info\" in your \"" elm-light-file "\""
                               Example:
                              \"make-info\": {\"main\": \"src/Main.elm\", \"out\": \"dist/main.js\"}")
                  :buttons [{:label "Ok"}]}))
@@ -176,7 +182,7 @@
                       (let [info (:info @ed)
                             project-path (project-path (:path info))
                             {:keys [main out]} (-> project-path
-                                                   (files/join elm-package-file)
+                                                   (files/join elm-light-file)
                                                    parse-json-file
                                                    :make-info)]
                         (if (and main out)
